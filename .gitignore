@@ -30,3 +30,8 @@ go.sum # If not using Go Modules (though usually committed with Go Modules)
 
 # Environment variables
 .env
+
+
+# Added by cargo
+
+/target
