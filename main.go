@@ -1,15 +1,21 @@
 package main
 
+import (
+	"encoding/json"
+	"io"
+	"net/http"
+)
+
 func main() {
-    res, _ := http.Get("https://opentdb.com/api.php?amount=50&category=18&difficulty=medium")
+	res, _ := http.Get("https://opentdb.com/api.php?amount=50&category=18&difficulty=medium")
 
-    triviaRes := TriviaResponse{}
+	triviaRes := TriviaResponse{}
 
-    bytes, _ := io.ReadAll(res.Body)
+	bytes, _ := io.ReadAll(res.Body)
 
-    json.Unmarshal(bytes, &triviaRes)
+	json.Unmarshal(bytes, &triviaRes)
 
-    for _, result := range triviaRes.REsult {
-        printLn(result.Category + ": " + result.Question)
-    }
+	for _, result := range triviaRes.Results {
+		println(result.Category + ": " + result.Question)
+	}
 }
