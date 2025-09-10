@@ -1,3 +1,10 @@
+use workshop_client::TriviaResponse;
+
 fn main() {
-    workshop_client::print_hello(); // Use lib function
+    let url = "https://opentdb.com/api.php?amount=10";
+    let res = reqwest::blocking::get(url)
+        .expect("Failed to get trivia response");
+    let data: TriviaResponse = res.json().expect("Failed to parse response");
+
+    println!("{:#?}", data);
 }
