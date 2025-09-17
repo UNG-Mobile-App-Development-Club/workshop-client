@@ -3,15 +3,22 @@ package main
 import (
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 )
 
 func main() {
-	res, _ := http.Get("https://opentdb.com/api.php?amount=10&difficulty=hard")
+	res, err := http.Get("https://opentdb.com/api.php?amount=10&difficulty=hard")
+	if err != nil {
+		log.Fatalf("Failed to fetch trivia questions: %v", err)
+	}
 
 	triviaRes := TriviaResponse{}
 
-	bytes, _ := io.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatalf("Failed to read response body: %v", err)
+	}
 
 	json.Unmarshal(bytes, &triviaRes)
 
